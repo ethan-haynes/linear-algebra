@@ -25,7 +25,7 @@ class Vector:
             if self.dimension != v.dimension:
                 raise ValueError
             
-            return tuple(self.coordinates[i] + v.coordinates[i] for i in range(0, self.dimension))
+            return tuple(i + j for i, j in zip(self.coordinates, v.coordinates))
         except ValueError:
             raise ValueError('Dimension of two vectors must equal')
 
@@ -34,7 +34,7 @@ class Vector:
             if self.dimension != v.dimension:
                 raise ValueError
 
-            return tuple(self.coordinates[i] - v.coordinates[i] for i in range(0, self.dimension))
+            return tuple(i - j for i, j in zip(self.coordinates, v.coordinates))
         except ValueError:
             raise ValueError('Dimension of two vectors must equal')
     
@@ -45,8 +45,8 @@ class Vector:
             if type(v) == Vector:
                 if self.dimension != v.dimension:
                     raise ValueError
-                return tuple(self.coordinates[i] * v.coordinates[i] for i in range(0, self.dimension))    
-            return tuple(self.coordinates[i] * v for i in range(0, self.dimension))
+                return tuple(i * j for i, j in zip(self.coordinates, v.coordinates)) # dot product    
+            return tuple(i * v for i in self.coordinates)
         
         except TypeError:
             raise TypeError('Vector can only be multiplied by int or float')
