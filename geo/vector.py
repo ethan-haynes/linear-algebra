@@ -3,7 +3,7 @@ class Vector:
         try:
             if not coordinates:
                 raise ValueError
-            self.coordinates = (coordinates)
+            self.coordinates = tuple(coordinates)
             self.dimension = len(coordinates)
                 
         except ValueError:
@@ -16,3 +16,12 @@ class Vector:
 
     def __eq__(self, v):
         return self.coordinates == v.coordinates
+
+    def __add__(self, v):
+        try:
+            if self.dimension != v.dimension:
+                raise ValueError
+            
+            return tuple(self.coordinates[i] + v.coordinates[i] for i in range(0, self.dimension))
+        except ValueError:
+            raise ValueError('Dimension of two vectors must equal')
