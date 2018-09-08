@@ -1,3 +1,5 @@
+import math
+
 class Vector:
     def __init__(self, coordinates):
         try:
@@ -5,7 +7,8 @@ class Vector:
                 raise ValueError
             self.coordinates = tuple(coordinates)
             self.dimension = len(coordinates)
-                
+            self.magnitude = math.sqrt(sum(i**2 for i in self.coordinates))
+
         except ValueError:
             raise ValueError('Coordinates must not be empty')
         except TypeError:
@@ -34,3 +37,20 @@ class Vector:
             return tuple(self.coordinates[i] - v.coordinates[i] for i in range(0, self.dimension))
         except ValueError:
             raise ValueError('Dimension of two vectors must equal')
+    
+    def __mul__(self, num):
+        try:
+            if type(num) != int and type(num) != float:
+                raise TypeError
+            return tuple(self.coordinates[i] * num for i in range(0, self.dimension))
+        except TypeError:
+            raise TypeError('Vector can only be multiplied by int or float')
+    
+    def __rmul__(self, num):
+        return self.__mul__(num)
+
+    def normalize(self):
+        try:
+            return self.__mul__(1/self.magnitude)
+        except ZeroDivisionError:
+            raise ZeroDivisionError('Cannot normalize the Zero Vector')
