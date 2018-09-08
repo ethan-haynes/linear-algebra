@@ -38,16 +38,23 @@ class Vector:
         except ValueError:
             raise ValueError('Dimension of two vectors must equal')
     
-    def __mul__(self, num):
+    def __mul__(self, v):
         try:
-            if type(num) != int and type(num) != float:
+            if type(v) != int and type(v) != float and type(v) != Vector:
                 raise TypeError
-            return tuple(self.coordinates[i] * num for i in range(0, self.dimension))
+            if type(v) == Vector:
+                if self.dimension != v.dimension:
+                    raise ValueError
+                return tuple(self.coordinates[i] * v.coordinates[i] for i in range(0, self.dimension))    
+            return tuple(self.coordinates[i] * v for i in range(0, self.dimension))
+        
         except TypeError:
             raise TypeError('Vector can only be multiplied by int or float')
-    
-    def __rmul__(self, num):
-        return self.__mul__(num)
+        except ValueError:
+            raise ValueError('Dimension of two vectors must equal')
+
+    def __rmul__(self, v):
+        return self.__mul__(v)
 
     def normalize(self):
         try:
