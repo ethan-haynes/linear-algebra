@@ -25,3 +25,12 @@ class Vector:
             return tuple(self.coordinates[i] + v.coordinates[i] for i in range(0, self.dimension))
         except ValueError:
             raise ValueError('Dimension of two vectors must equal')
+
+    def __sub__(self, v):
+        try:
+            if self.dimension != v.dimension:
+                raise ValueError
+
+            return tuple(self.coordinates[i] - v.coordinates[i] for i in range(0, self.dimension))
+        except ValueError:
+            raise ValueError('Dimension of two vectors must equal')
