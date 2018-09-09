@@ -61,3 +61,12 @@ class Vector:
             return self.__mul__(1/self.magnitude)
         except ZeroDivisionError:
             raise ZeroDivisionError('Cannot normalize the Zero Vector')
+
+    def angle_with(self, v, in_degrees=False):
+        n1, n2 = self.normalize(), v.normalize()
+        angle_in_radians = math.acos(sum(Vector(n1) * Vector(n2)))
+            
+        if in_degrees:
+            angle_in_radians *= 180 / math.pi
+
+        return angle_in_radians
