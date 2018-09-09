@@ -70,3 +70,15 @@ class Vector:
             angle_in_radians *= 180 / math.pi
 
         return angle_in_radians
+
+    def is_zero(self, tolerance=1e-10):
+        return self.magnitude < tolerance
+
+    def is_parallel(self, v):
+        return (self.is_zero()             or
+                v.is_zero()                or
+                self.angle_with(v) == 0    or
+                self.angle_with(v) == math.pi)
+
+    def is_orthogonal(self, v, tolerance=1e-10):
+        return math.fabs(sum(self.__mul__(v))) < tolerance
